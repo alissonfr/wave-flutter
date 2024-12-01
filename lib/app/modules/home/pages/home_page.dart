@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wave_flutter/app/modules/home/widgets/section_widget.dart';
 import 'package:wave_flutter/app/service/album_service.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
-  final List<Map<String, dynamic>> albums = AlbumService.getAlbums();
+  final List<Album> albums = AlbumService.getAlbums();
 
   @override
   Widget build(BuildContext context) {
@@ -43,21 +44,20 @@ class HomePage extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/album-details',
-                    arguments: albumData[index]);
+                context.go('/details/${albumData[index].albumId}');
               },
               child: Row(
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(2),
                     child: Image.network(
-                      albumData[index]["image"],
+                      albumData[index].image,
                       fit: BoxFit.fitHeight,
                     ),
                   ),
                   const SizedBox(width: 8.0),
                   Text(
-                    albumData[index]["title"],
+                    albumData[index].title,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.white),
                   ),

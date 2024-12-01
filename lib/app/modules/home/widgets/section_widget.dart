@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wave_flutter/app/service/album_service.dart';
 import 'album_card.dart';
 
 class SectionWidget extends StatelessWidget {
   final String title;
-  final List<Map<String, dynamic>> albums;
+  final List<Album> albums;
 
   SectionWidget({required this.title, required this.albums});
 

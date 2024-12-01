@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:wave_flutter/app/service/album_service.dart';
 
 class AlbumCard extends StatelessWidget {
-  final Map<String, dynamic> album;
+  final Album album;
 
   AlbumCard({required this.album});
 
   @override
   Widget build(BuildContext context) {
-    final albumImage = album['image'];
-    final albumTitle = album['title'];
-    final albumArtists =
-        album['artists'].map((artist) => artist['name']).join(", ");
+    final albumImage = album.image;
+    final albumTitle = album.title;
+    final albumArtists = album.artists.map((artist) => artist.name).join(", ");
 
     return Card(
       color: Colors.transparent,
