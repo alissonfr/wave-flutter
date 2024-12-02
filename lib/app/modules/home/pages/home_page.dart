@@ -61,8 +61,6 @@ class HomePage extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
           childAspectRatio: 2 / 0.5,
         ),
         itemCount: albums.length,
@@ -75,7 +73,7 @@ class HomePage extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                context.go('/details/${albums[index].albumId}');
+                context.push('/details/${albums[index].albumId}');
               },
               child: Row(
                 children: [
