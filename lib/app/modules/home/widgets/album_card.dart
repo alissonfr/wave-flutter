@@ -13,13 +13,13 @@ class AlbumCard extends StatelessWidget {
     final albumTitle = album.title;
     final albumArtists = album.artists.map((artist) => artist.name).join(", ");
 
-    return Card(
-        color: Colors.transparent,
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
-        child: InkWell(
-          onTap: () {
-            context.push('/details/${album.albumId}');
-          },
+    return InkWell(
+        onTap: () {
+          context.push('/details/${album.albumId}');
+        },
+        child: Card(
+          color: Colors.transparent,
+          margin: EdgeInsets.symmetric(horizontal: 8.0),
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: 150,

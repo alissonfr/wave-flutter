@@ -60,4 +60,14 @@ class AlbumService {
 
     return sections;
   }
+
+  Future<List<Map<String, String>>> getCategories() async {
+    const List<Map<String, String>> filters = [
+      {"label": "Tudo", "value": "ALL"},
+      {"label": "Hip-hop", "value": "Hip-hop"},
+      {"label": "Rock", "value": "ROCK"}
+    ];
+
+    return filters;
+  }
 }
