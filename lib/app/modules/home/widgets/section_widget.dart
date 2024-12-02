@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wave_flutter/app/service/album_service.dart';
+import 'package:wave_flutter/app/models/entities/album.dart';
+
 import 'album_card.dart';
 
 class SectionWidget extends StatelessWidget {

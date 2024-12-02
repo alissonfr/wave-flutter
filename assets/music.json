@@ -1,121 +1,89 @@
 {
   "albums": [
     {
-      "album_id": "1",
+      "albumId": "1",
       "title": "GNX",
       "artists": [
-        { "artist_id": "1", "name": "Kendrick Lamar" }
+        { "artistId": "1", "name": "Kendrick Lamar" }
       ],
-      "genres": ["genre 1"],
+      "genres": [{"genreId": "1", "name": "hip-hop" }, {"genreId": "2", "name": "rap" }],
       "image": "https://a5.mzstatic.com/us/r1000/0/Music211/v4/50/c2/cc/50c2cc95-3658-9417-0d4b-831abde44ba1/24UM1IM28978.rgb.jpg",
       "songs": [
-        {
-          "song_id": "1",
-          "title": "wacced out murals",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" }
-          ],
-          "url": "assets/audios/music-2.mp3"
-        },
-        {
-          "song_id": "3",
-          "title": "squabble up",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" }
-          ],
-          "url": "assets/audios/music-3.mp3"
-        },
-        {
-          "song_id": "4",
-          "title": "luther (with sza)",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" },
-            { "artist_id": "3", "name": "SZA" }
-          ],
-          "url": "assets/audios/music-4.mp3"
-        },
-        {
-          "song_id": "5",
-          "title": "man at the garden",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" }
-          ],
-          "url": "assets/audios/music-5.mp3"
-        },
-        {
-          "song_id": "6",
-          "title": "hey now (featuring dody6)",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" },
-            { "artist_id": "4", "name": "Dody6" }
-          ],
-          "url": "assets/audios/music-6.mp3"
-        },
-        {
-          "song_id": "7",
-          "title": "reincarnated",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" }
-          ],
-          "url": "assets/audios/music-7.mp3"
-        },
-        {
-          "song_id": "8",
-          "title": "tv off (featuring lefty gunplay)",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" },
-            { "artist_id": "5", "name": "Lefty Gunplay" }
-          ],
-          "url": "assets/audios/music-8.mp3"
-        },
-        {
-          "song_id": "9",
-          "title": "dodger blue (featuring wallie the sensei, siete7x, and roddy ricch)",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" },
-            { "artist_id": "6", "name": "Wallie the Sensei" },
-            { "artist_id": "7", "name": "Siete7x" },
-            { "artist_id": "8", "name": "Roddy Ricch" }
-          ],
-          "url": "assets/audios/music-9.mp3"
-        },
-        {
-          "song_id": "10",
-          "title": "peekaboo (featuring azchike)",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" },
-            { "artist_id": "9", "name": "AzChike" }
-          ],
-          "url": "assets/audios/music-10.mp3"
-        },
-        {
-          "song_id": "11",
-          "title": "heart pt. 6",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" }
-          ],
-          "url": "assets/audios/music-11.mp3"
-        },
-        {
-          "song_id": "12",
-          "title": "gnx (featuring hitta j3, youngthreat, and peysoh)",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" },
-            { "artist_id": "10", "name": "Hitta J3" },
-            { "artist_id": "11", "name": "YoungThreat" },
-            { "artist_id": "12", "name": "Peysoh" }
-          ],
-          "url": "assets/audios/music-12.mp3"
-        },
-        {
-          "song_id": "13",
-          "title": "gloria (with sza)",
-          "artists": [
-            { "artist_id": "1", "name": "Kendrick Lamar" },
-            { "artist_id": "3", "name": "SZA" }
-          ],
-          "url": "assets/audios/music-13.mp3"
-        }
+        { "songId": "1", "title": "wacced out murals", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-2.mp3" },
+        { "songId": "3", "title": "squabble up", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-3.mp3" },
+        { "songId": "4", "title": "luther (with sza)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "3", "name": "SZA" }], "url": "assets/audios/music-4.mp3" },
+        { "songId": "5", "title": "man at the garden", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-5.mp3" },
+        { "songId": "6", "title": "hey now (featuring dody6)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "4", "name": "Dody6" }], "url": "assets/audios/music-6.mp3" },
+        { "songId": "7", "title": "reincarnated", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-7.mp3" },
+        { "songId": "8", "title": "tv off (featuring lefty gunplay)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "5", "name": "Lefty Gunplay" }], "url": "assets/audios/music-8.mp3" },
+        { "songId": "9", "title": "dodger blue (featuring wallie the sensei, siete7x, and roddy ricch)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "6", "name": "Wallie the Sensei" }, { "artistId": "7", "name": "Siete7x" }, { "artistId": "8", "name": "Roddy Ricch" }], "url": "assets/audios/music-9.mp3" },
+        { "songId": "10", "title": "peekaboo (featuring azchike)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "9", "name": "AzChike" }], "url": "assets/audios/music-10.mp3" },
+        { "songId": "11", "title": "heart pt. 6", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-11.mp3" },
+        { "songId": "12", "title": "gnx (featuring hitta j3, youngthreat, and peysoh)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "10", "name": "Hitta J3" }, { "artistId": "11", "name": "YoungThreat" }, { "artistId": "12", "name": "Peysoh" }], "url": "assets/audios/music-12.mp3" },
+        { "songId": "13", "title": "gloria (with sza)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "3", "name": "SZA" }], "url": "assets/audios/music-13.mp3" }
+      ]
+    },
+    {
+      "albumId": "2",
+      "title": "good kid, m.A.A.d city",
+      "artists": [
+        { "artistId": "1", "name": "Kendrick Lamar" }
+      ],
+      "genres": [{"genreId": "1", "name": "hip-hop" }, {"genreId": "2", "name": "rap" }],
+      "image": "https://a5.mzstatic.com/us/r1000/0/Music211/v4/50/c2/cc/50c2cc95-3658-9417-0d4b-831abde44ba1/24UM1IM28978.rgb.jpg",
+      "songs": [
+        { "songId": "1", "title": "Sherane a.k.a Master Splinter's Daughter", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-1.mp3" },
+        { "songId": "2", "title": "Bitch, Don't Kill My Vibe", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-2.mp3" },
+        { "songId": "3", "title": "Money Trees (featuring Jay Rock)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "2", "name": "Jay Rock" }], "url": "assets/audios/music-3.mp3" },
+        { "songId": "4", "title": "Poetic Justice (featuring Drake)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "13", "name": "Drake" }], "url": "assets/audios/music-4.mp3" },
+        { "songId": "5", "title": "good kid", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-5.mp3" },
+        { "songId": "6", "title": "m.A.A.d city", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-6.mp3" },
+        { "songId": "7", "title": "Swimming Pools (Drank)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-7.mp3" },
+        { "songId": "8", "title": "Sing About Me, I'm Dying of Thirst", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-8.mp3" },
+        { "songId": "9", "title": "Real", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-9.mp3" },
+        { "songId": "10", "title": "Compton (featuring Dr. Dre)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "14", "name": "Dr. Dre" }], "url": "assets/audios/music-10.mp3" }
+      ]
+    },
+    {
+      "albumId": "3",
+      "title": "To Pimp a Butterfly",
+      "artists": [
+        { "artistId": "1", "name": "Kendrick Lamar" }
+      ],
+      "genres": [{"genreId": "1", "name": "hip-hop" }, {"genreId": "3", "name": "jazz" }, {"genreId": "4", "name": "soul" }],
+      "image": "https://a5.mzstatic.com/us/r1000/0/Music211/v4/50/c2/cc/50c2cc95-3658-9417-0d4b-831abde44ba1/24UM1IM28978.rgb.jpg",
+      "songs": [
+        { "songId": "1", "title": "Wesley's Theory (featuring George Clinton and Thundercat)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "15", "name": "George Clinton" }, { "artistId": "16", "name": "Thundercat" }], "url": "assets/audios/music-1.mp3" },
+        { "songId": "2", "title": "For Free? (Interlude)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-2.mp3" },
+        { "songId": "3", "title": "King Kunta", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-3.mp3" },
+        { "songId": "4", "title": "Institutionalized (featuring Bilal, Thundercat, and Anna Wise)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "17", "name": "Bilal" }, { "artistId": "16", "name": "Thundercat" }, { "artistId": "18", "name": "Anna Wise" }], "url": "assets/audios/music-4.mp3" },
+        { "songId": "5", "title": "These Walls (featuring Bilal, Thundercat, and Anastasia)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "17", "name": "Bilal" }, { "artistId": "16", "name": "Thundercat" }, { "artistId": "19", "name": "Anastasia" }], "url": "assets/audios/music-5.mp3" },
+        { "songId": "6", "title": "u", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-6.mp3" },
+        { "songId": "7", "title": "Alright", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-7.mp3" },
+        { "songId": "8", "title": "For Sale? (Interlude)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-8.mp3" },
+        { "songId": "9", "title": "Momma", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-9.mp3" },
+        { "songId": "10", "title": "Hood Politics", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-10.mp3" }
+      ]
+    },
+    {
+      "albumId": "4",
+      "title": "DAMN.",
+      "artists": [
+        { "artistId": "1", "name": "Kendrick Lamar" }
+      ],
+      "genres": [{"genreId": "1", "name": "hip-hop" }, {"genreId": "2", "name": "rap" }],
+      "image": "https://a5.mzstatic.com/us/r1000/0/Music211/v4/50/c2/cc/50c2cc95-3658-9417-0d4b-831abde44ba1/24UM1IM28978.rgb.jpg",
+      "songs": [
+        { "songId": "1", "title": "BLOOD.", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-1.mp3" },
+        { "songId": "2", "title": "DNA.", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-2.mp3" },
+        { "songId": "3", "title": "YAH.", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-3.mp3" },
+        { "songId": "4", "title": "ELEMENT.", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-4.mp3" },
+        { "songId": "5", "title": "FEEL.", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-5.mp3" },
+        { "songId": "6", "title": "LOYALTY. (featuring Rihanna)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "20", "name": "Rihanna" }], "url": "assets/audios/music-6.mp3" },
+        { "songId": "7", "title": "PRIDE.", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-7.mp3" },
+        { "songId": "8", "title": "HUMBLE.", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-8.mp3" },
+        { "songId": "9", "title": "LUST.", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }], "url": "assets/audios/music-9.mp3" },
+        { "songId": "10", "title": "XXX. (featuring U2)", "artists": [{ "artistId": "1", "name": "Kendrick Lamar" }, { "artistId": "21", "name": "U2" }], "url": "assets/audios/music-10.mp3" }
       ]
     }
   ]

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wave_flutter/app/service/album_service.dart';
+import 'package:wave_flutter/app/models/entities/album.dart';
 
 class AlbumCard extends StatelessWidget {
   final Album album;
@@ -25,10 +25,16 @@ class AlbumCard extends StatelessWidget {
             children: [
               Text(albumTitle,
                   style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              Text(albumArtists, style: TextStyle(color: Colors.grey))
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+              Text(albumArtists,
+                  style: TextStyle(
+                    color: Colors.grey,
+                    overflow: TextOverflow.ellipsis,
+                  ))
             ],
           )
         ],
