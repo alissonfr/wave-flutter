@@ -15,7 +15,7 @@ Album _$AlbumFromJson(Map<String, dynamic> json) => Album(
       genres: (json['genres'] as List<dynamic>)
           .map((e) => Genre.fromJson(e as Map<String, dynamic>))
           .toList(),
-      image: json['image'] as String,
+      images: AlbumImage.fromJson(json['images'] as Map<String, dynamic>),
       songs: (json['songs'] as List<dynamic>)
           .map((e) => Song.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -26,6 +26,17 @@ Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
       'title': instance.title,
       'artists': instance.artists,
       'genres': instance.genres,
-      'image': instance.image,
+      'images': instance.images,
       'songs': instance.songs,
+    };
+
+AlbumImage _$AlbumImageFromJson(Map<String, dynamic> json) => AlbumImage(
+      highQuality: json['highQuality'] as String,
+      lowQuality: json['lowQuality'] as String,
+    );
+
+Map<String, dynamic> _$AlbumImageToJson(AlbumImage instance) =>
+    <String, dynamic>{
+      'highQuality': instance.highQuality,
+      'lowQuality': instance.lowQuality,
     };

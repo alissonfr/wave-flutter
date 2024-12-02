@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
@@ -18,10 +17,12 @@ class AlbumService {
   }
 
   Future<List<Album>> get() async {
+    await _init();
     return _DATA;
   }
 
-  Future<Album> getById(final int id) async {
+  Future<Album> getById(final String id) async {
+    await _init();
     return _DATA.firstWhere((album) => album.albumId == id);
   }
 
@@ -30,7 +31,7 @@ class AlbumService {
 
     List<Album> shuffledData = List.from(_DATA);
     shuffledData.shuffle(Random());
-    return shuffledData.take(6).toList();
+    return shuffledData.take(8).toList();
   }
 
   Future<List<HomeSectionDTO>> getHomeInfo() async {
@@ -47,7 +48,6 @@ class AlbumService {
       "Sugestões Baseadas no Seu Gosto",
       "Em Alta",
       "Músicas Recomendadas",
-      "Playlists Populares",
       "Álbuns Clássicos",
       "Hits do Momento"
     ];

@@ -16,8 +16,16 @@ class SectionWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Padding(
+              padding: EdgeInsets.only(left: 8),
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              )),
           const SizedBox(height: 8.0),
           Container(
             height: 220,

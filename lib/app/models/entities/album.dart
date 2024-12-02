@@ -12,7 +12,7 @@ class Album {
   final String title;
   final List<Artist> artists;
   final List<Genre> genres;
-  final String image;
+  final AlbumImage images;
   final List<Song> songs;
 
   Album({
@@ -20,10 +20,25 @@ class Album {
     required this.title,
     required this.artists,
     required this.genres,
-    required this.image,
+    required this.images,
     required this.songs,
   });
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);
   Map<String, dynamic> toJson() => _$AlbumToJson(this);
+}
+
+@JsonSerializable()
+class AlbumImage {
+  final String highQuality;
+  final String lowQuality;
+
+  AlbumImage({
+    required this.highQuality,
+    required this.lowQuality,
+  });
+
+  factory AlbumImage.fromJson(Map<String, dynamic> json) =>
+      _$AlbumImageFromJson(json);
+  Map<String, dynamic> toJson() => _$AlbumImageToJson(this);
 }
