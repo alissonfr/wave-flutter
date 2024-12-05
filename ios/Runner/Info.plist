@@ -56,5 +56,28 @@
             </array>
         </dict>
     </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.779306557409-6k9ib14t9sbp5e6273i638d76m9g7tjp.apps.googleusercontent.com</string> <!-- Substitua pelo seu CLIENT_ID -->
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.779306557409-6k9ib14t9sbp5e6273i638d76m9g7tjp</string>
+			</array>
+		</dict>
+	</array>
+
+	<key>GIDClientID</key>
+	<string>779306557409-6k9ib14t9sbp5e6273i638d76m9g7tjp.apps.googleusercontent.com</string> 
 </dict>
 </plist>

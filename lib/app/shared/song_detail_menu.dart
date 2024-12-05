@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wave_flutter/app/core/providers/auth_provider.dart';
 import 'package:wave_flutter/app/models/entities/playlist.dart';
 import 'package:wave_flutter/app/models/entities/song.dart';
 import 'package:wave_flutter/app/service/playlist_service.dart';
@@ -13,6 +15,8 @@ class SongDetailMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthProvider>();
+
     return IconButton(
       padding: EdgeInsets.zero,
       icon: Icon(Icons.more_horiz, color: Colors.white),
@@ -34,10 +38,11 @@ class SongDetailMenu extends StatelessWidget {
               position.dy,
             ),
             items: [
-              PopupMenuItem<int>(
-                value: 0,
-                child: Text("Adicionar a playlist"),
-              ),
+              if (authProvider.user != null)
+                PopupMenuItem<int>(
+                  value: 0,
+                  child: Text("Adicionar a playlist"),
+                ),
               PopupMenuItem<int>(
                 value: 1,
                 child: Text("Detalhes"),
@@ -57,7 +62,6 @@ class SongDetailMenu extends StatelessWidget {
     );
   }
 
-  // Exibir o bottom sheet com detalhes da música
   static void _showSongDetailsBottomSheet(BuildContext context, Song song) {
     showModalBottomSheet(
       context: context,
@@ -138,7 +142,7 @@ class SongDetailMenu extends StatelessWidget {
               ),
               SizedBox(height: 6),
               InkWell(
-                onTap: _launchURL, // Quando o link for tocado
+                onTap: _launchURL,
                 child: Text(
                   URL,
                   style: TextStyle(color: Colors.blue, fontSize: 14),
@@ -174,7 +178,6 @@ class SongDetailMenu extends StatelessWidget {
     );
   }
 
-  // Lançar a URL
   static void _launchURL() async {
     final url = Uri.parse(URL);
     if (await canLaunchUrl(url)) {
@@ -184,7 +187,6 @@ class SongDetailMenu extends StatelessWidget {
     }
   }
 
-  // Exibir as playlists para adicionar a música
   void _showAddToPlaylistMenu(BuildContext context) async {
     final playlists = await playlistService.get();
     final selectedPlaylist = await showDialog<Playlist>(

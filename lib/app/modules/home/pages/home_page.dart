@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wave_flutter/app/core/providers/auth_provider.dart';
 import 'package:wave_flutter/app/core/providers/genre_state.dart';
 import 'package:wave_flutter/app/core/providers/playlist_state.dart';
 import 'package:wave_flutter/app/models/dto/home_section.dart';
@@ -93,6 +94,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final selectedGenre = context.watch<GenreState>().selectedGenre;
     final playlists = context.watch<PlaylistState>().playlists;
+    final authProvider = context.watch<AuthProvider>();
 
     return Scaffold(
       body: FutureBuilder(
@@ -123,7 +125,8 @@ class _HomePageState extends State<HomePage> {
                   UserHeaderWidget(),
                   AlbumGridWidget(albums: filteredAlbums),
                   const SizedBox(height: 16.0),
-                  selectedGenre.name == GenresEnum.ALL.name
+                  authProvider.user != null &&
+                          selectedGenre.name == GenresEnum.ALL.name
                       ? PlaylistSection(playlists: playlists)
                       : const SizedBox(),
                   ListView.builder(

@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:wave_flutter/app/core/providers/auth_provider.dart';
 import 'package:wave_flutter/app/core/providers/genre_state.dart';
 import 'package:wave_flutter/app/core/providers/playlist_state.dart';
 import 'package:wave_flutter/app/core/theme/app_theme.dart';
@@ -11,12 +13,15 @@ import 'package:wave_flutter/app/shared/details/album_details_module.dart';
 import 'package:wave_flutter/app/shared/details/playlist_details_module.dart';
 import 'package:wave_flutter/app/shared/playlist/playlist_module.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PlaylistState()),
         ChangeNotifierProvider(create: (_) => GenreState()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: MyApp(),
     ),
