@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:wave_flutter/app/models/entities/album.dart';
-import 'package:wave_flutter/app/modules/home/widgets/album_card_widget.dart';
 
-class SectionWidget extends StatelessWidget {
+class SectionWidget<T> extends StatelessWidget {
   final String title;
-  final List<Album> albums;
+  final List<T> items;
+  final Widget Function(BuildContext, T) itemBuilder;
 
-  SectionWidget({required this.title, required this.albums});
+  const SectionWidget({
+    required this.title,
+    required this.items,
+    required this.itemBuilder,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,24 +20,24 @@ class SectionWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-              padding: EdgeInsets.only(left: 8),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              )),
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
           const SizedBox(height: 8.0),
-          Container(
+          SizedBox(
             height: 220,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: albums.length,
+              itemCount: items.length,
               itemBuilder: (context, index) {
-                final album = albums[index];
-                return AlbumCardWidget(album: album);
+                return itemBuilder(context, items[index]);
               },
             ),
           ),

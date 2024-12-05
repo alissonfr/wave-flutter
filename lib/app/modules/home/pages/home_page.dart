@@ -4,9 +4,9 @@ import 'package:wave_flutter/app/core/providers/genre_state.dart';
 import 'package:wave_flutter/app/models/dto/home_section.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
 import 'package:wave_flutter/app/models/entities/playlist.dart';
-import 'package:wave_flutter/app/modules/home/widgets/album_grid_widget.dart';
-import 'package:wave_flutter/app/modules/home/widgets/playlist_section_widget.dart';
-import 'package:wave_flutter/app/modules/home/widgets/section_widget.dart';
+import 'package:wave_flutter/app/modules/home/widgets/album/album_grid_widget.dart';
+import 'package:wave_flutter/app/modules/home/widgets/playlist/playlist_section_widget.dart';
+import 'package:wave_flutter/app/modules/home/widgets/album/album_section_widget.dart';
 import 'package:wave_flutter/app/modules/home/widgets/user_header_widget.dart';
 import 'package:wave_flutter/app/service/album_service.dart';
 import 'package:wave_flutter/app/service/playlist_service.dart';
@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: playlists.length,
                     itemBuilder: (context, index) {
-                      return PlaylistSectionWidget(
+                      return PlaylistSection(
                         playlists: playlists,
                       );
                     },
@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: homeInfo.length,
                     itemBuilder: (context, index) {
-                      return SectionWidget(
+                      return AlbumSection(
                         title: homeInfo[index].title,
                         albums: homeInfo[index].albums,
                       );
