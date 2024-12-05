@@ -6,7 +6,7 @@ class SectionWidget<T> extends StatelessWidget {
   final Widget Function(BuildContext, T) itemBuilder;
   final Function()? titleFunction;
 
-  SectionWidget({
+  const SectionWidget({
     required this.title,
     required this.items,
     required this.itemBuilder,

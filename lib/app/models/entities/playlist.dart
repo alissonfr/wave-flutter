@@ -8,7 +8,7 @@ class Playlist {
   final String playlistId;
   final String title;
   final String image;
-  final List<Song> songs;
+  List<Song> songs;
 
   Playlist({
     required this.playlistId,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
 import 'package:wave_flutter/app/service/album_service.dart';
+import 'package:wave_flutter/app/shared/song_detail_menu.dart';
 
 class AlbumDetailsPage extends StatelessWidget {
   final AlbumService albumService = AlbumService();
@@ -172,31 +173,7 @@ class AlbumDetailsPage extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Container(
-                                            color: Colors.black,
-                                            height: 200,
-                                            child: Center(
-                                              child: Text(
-                                                'Opções para ${song.title}',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Icon(Icons.more_horiz,
-                                          color: Colors.white),
-                                    ),
-                                  ),
+                                  SongDetailMenu(song: song),
                                 ],
                               ),
                             )),

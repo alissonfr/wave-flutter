@@ -5,6 +5,7 @@ import 'package:wave_flutter/app/core/providers/playlist_state.dart';
 import 'package:wave_flutter/app/models/dto/home_section.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
 import 'package:wave_flutter/app/models/entities/playlist.dart';
+import 'package:wave_flutter/app/models/enums/genres.dart';
 import 'package:wave_flutter/app/modules/home/widgets/album/album_grid_widget.dart';
 import 'package:wave_flutter/app/modules/home/widgets/album/album_section_widget.dart';
 import 'package:wave_flutter/app/modules/home/widgets/playlist/playlist_section_widget.dart';
@@ -59,8 +60,9 @@ class _HomePageState extends State<HomePage> {
                   UserHeaderWidget(),
                   AlbumGridWidget(albums: filteredAlbums),
                   const SizedBox(height: 16.0),
-                  PlaylistSection(
-                      playlists: playlists), // Agora usa o estado atualizado
+                  selectedGenre.name == GenresEnum.ALL.name
+                      ? PlaylistSection(playlists: playlists)
+                      : const SizedBox(),
                   ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
