@@ -12,7 +12,12 @@
           "package_name": "com.example.wave_flutter"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "779306557409-s2egh8g6mb261k62c4jk5dbnn92gjv2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDDNQVGpW9sXVdL9ifIwk179ue-YlC6g6w"
@@ -20,7 +25,71 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779306557409-s2egh8g6mb261k62c4jk5dbnn92gjv2a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779306557409-6k9ib14t9sbp5e6273i638d76m9g7tjp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.waveflutter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779306557409:android:8d5bb9bc22678265e33ca0",
+        "android_client_info": {
+          "package_name": "com.example.wave_flutterpm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779306557409-31o74tndej6ik1mll3a94ltfpahd69t4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wave_flutterpm",
+            "certificate_hash": "0bb18eca59990a2d323840cc220e164eb8568527"
+          }
+        },
+        {
+          "client_id": "779306557409-4s4bam9rt7f81qjnfh0c81igcdid5797.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wave_flutterpm",
+            "certificate_hash": "b855b5056796ab5e60fce6fe85591c2c44b342e1"
+          }
+        },
+        {
+          "client_id": "779306557409-s2egh8g6mb261k62c4jk5dbnn92gjv2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDNQVGpW9sXVdL9ifIwk179ue-YlC6g6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779306557409-s2egh8g6mb261k62c4jk5dbnn92gjv2a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779306557409-6k9ib14t9sbp5e6273i638d76m9g7tjp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.waveflutter"
+              }
+            }
+          ]
         }
       }
     }
