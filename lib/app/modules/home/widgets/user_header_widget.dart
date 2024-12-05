@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wave_flutter/app/core/providers/genre_state.dart';
 import 'package:wave_flutter/app/models/enums/genres.dart';
 import 'package:wave_flutter/app/service/album_service.dart';
 
@@ -12,10 +14,10 @@ class UserHeaderWidget extends StatefulWidget {
 class _UserHeaderState extends State<UserHeaderWidget> {
   final AlbumService albumService = AlbumService();
 
-  String _selectedFilter = GenresEnum.ALL.name;
-
   @override
   Widget build(BuildContext context) {
+    final genreState = context.watch<GenreState>();
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -37,11 +39,7 @@ class _UserHeaderState extends State<UserHeaderWidget> {
                     child: FutureBuilder(
                       future: albumService.getGenres(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
+                        if (snapshot.hasError) {
                           return const Center(
                               child: Text('Erro ao carregar dados'));
                         } else if (!snapshot.hasData ||
@@ -59,17 +57,18 @@ class _UserHeaderState extends State<UserHeaderWidget> {
                                     const EdgeInsets.symmetric(horizontal: 4.0),
                                 child: FilterChip(
                                   label: Text(filter["label"]!),
-                                  selected: _selectedFilter == filter["value"],
+                                  selected: genreState.selectedGenre ==
+                                      GenresEnum.fromValue(filter["value"]!),
                                   onSelected: (isSelected) {
-                                    setState(() {
-                                      _selectedFilter = filter["value"]!;
-                                    });
+                                    genreState.setGenre(
+                                        GenresEnum.fromValue(filter["value"]!));
                                   },
                                   selectedColor: Colors.primaries.first,
                                   backgroundColor: Colors.grey[800],
                                   labelStyle: TextStyle(
                                     fontSize: 12,
-                                    color: _selectedFilter == filter["label"]
+                                    color: genreState.selectedGenre ==
+                                            filter["value"]
                                         ? Colors.white
                                         : Colors.white,
                                   ),

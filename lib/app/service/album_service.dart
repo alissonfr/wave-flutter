@@ -35,11 +35,9 @@ class AlbumService {
     return shuffledData.take(8).toList();
   }
 
-  Future<List<HomeSectionDTO>> getHomeInfo() async {
-    await _init();
-
+  Future<List<HomeSectionDTO>> getHomeInfo(GenresEnum genre) async {
     List<HomeSectionDTO> sections = [];
-    List<Album> shuffledData = List.from(_DATA);
+    List<Album> shuffledData = await getByGenre(genre);
 
     List<String> titles = [
       "Álbuns Mais Ouvidos",
@@ -69,7 +67,7 @@ class AlbumService {
 
     return _DATA.where((album) {
       return album.genres.any((albumGenre) =>
-          albumGenre.name.toLowerCase() == genre.name.toLowerCase());
+          albumGenre.name.toLowerCase() == genre.label.toLowerCase());
     }).toList();
   }
 
