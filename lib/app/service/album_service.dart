@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:wave_flutter/app/models/dto/home_section.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
+import 'package:wave_flutter/app/models/entities/song.dart';
 import 'package:wave_flutter/app/models/enums/genres.dart';
 
 class AlbumService {
@@ -75,5 +76,12 @@ class AlbumService {
     return GenresEnum.values
         .map((category) => {"label": category.label, "value": category.name})
         .toList();
+  }
+
+  List<Song> filterSongsByQuery(List<Song> songs, String query) {
+    return songs.where((song) {
+      return song.title.toLowerCase().contains(query) ||
+          song.artists[0].name.toLowerCase().contains(query);
+    }).toList();
   }
 }

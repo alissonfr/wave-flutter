@@ -21,32 +21,11 @@ class PlaylistCardWidget extends StatelessWidget {
     final playlistArtists =
         artists.take(3).map((artist) => artist.name).join(", ");
 
-    return Row(
-      children: [
-        CardWidget(
-          imageUrl: playlistImage,
-          title: playlistTitle,
-          subtitle: "Playlist • $playlistArtists",
-          onTap: () => context.push('/details/${playlist.playlistId}'),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, bottom: 30),
-          child: IconButton(
-            icon: Icon(
-              Icons.add,
-              size: 50,
-              color: Colors.primaries.first,
-            ),
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.black),
-              padding: WidgetStateProperty.all(EdgeInsets.all(10)),
-            ),
-            onPressed: () {
-              context.pop();
-            },
-          ),
-        )
-      ],
+    return CardWidget(
+      imageUrl: playlistImage,
+      title: playlistTitle,
+      subtitle: "Playlist • $playlistArtists",
+      onTap: () => context.push('/playlist-details/${playlist.playlistId}'),
     );
   }
 }

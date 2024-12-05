@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:wave_flutter/app/core/providers/genre_state.dart';
+import 'package:wave_flutter/app/core/providers/playlist_state.dart';
 import 'package:wave_flutter/app/core/theme/app_theme.dart';
 import 'package:wave_flutter/app/modules/home/home_module.dart';
 import 'package:wave_flutter/app/modules/library/library_module.dart';
 import 'package:wave_flutter/app/modules/search/search_module.dart';
-import 'package:wave_flutter/app/shared/pages/details/details_module.dart';
+import 'package:wave_flutter/app/shared/details/album_details_module.dart';
+import 'package:wave_flutter/app/shared/details/playlist_details_module.dart';
+import 'package:wave_flutter/app/shared/playlist/playlist_module.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => PlaylistState()),
         ChangeNotifierProvider(create: (_) => GenreState()),
       ],
       child: MyApp(),
@@ -55,10 +59,23 @@ final GoRouter _router = GoRouter(
           builder: (context, state) => LibraryModule(),
         ),
         GoRoute(
-          path: '/details/:id',
+          path: '/create-playlist',
+          pageBuilder: (context, state) =>
+              NoTransitionPage(child: PlaylistModule()),
+          builder: (context, state) => PlaylistModule(),
+        ),
+        GoRoute(
+          path: '/album-details/:id',
           builder: (context, state) {
             final id = state.pathParameters['id']!;
-            return DetailsModule(id: id);
+            return AlbumDetailsModule(id: id);
+          },
+        ),
+        GoRoute(
+          path: '/playlist-details/:id',
+          builder: (context, state) {
+            final id = state.pathParameters['id']!;
+            return PlaylistDetailsModule(id: id);
           },
         ),
       ],

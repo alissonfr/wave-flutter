@@ -2,8 +2,8 @@
   "playlists": [
     {
       "playlistId": "1",
-      "title": "As miozinhas",
-      "image": "https://a5.mzstatic.com/us/r1000/0/Music211/v4/50/c2/cc/50c2cc95-3658-9417-0d4b-831abde44ba1/24UM1IM28978.rgb.jpg",
+      "title": "Playlist #1",
+      "image": "https://www.qobuz.com/assets-static/img/suggestion/default.png",
       "songs": [
         { "songId": "1000", "title": "Juicy", "artists": [{ "artistId": "13", "name": "The Notorious B.I.G." }], "url": "assets/audios/classics/juicy.mp3" },
         { "songId": "1001", "title": "N.Y. State of Mind", "artists": [{ "artistId": "14", "name": "Nas" }], "url": "assets/audios/classics/ny_state_of_mind.mp3" },

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wave_flutter/app/models/entities/album.dart';
-import 'package:wave_flutter/app/service/album_service.dart';
+import 'package:wave_flutter/app/models/entities/artist.dart';
+import 'package:wave_flutter/app/models/entities/playlist.dart';
+import 'package:wave_flutter/app/service/playlist_service.dart';
 
-class DetailsPage extends StatelessWidget {
-  final AlbumService albumService = AlbumService();
+class PlaylistDetailsPage extends StatelessWidget {
+  final PlaylistService playlistService = PlaylistService();
   final String id;
 
-  DetailsPage({Key? key, required this.id}) : super(key: key);
+  PlaylistDetailsPage({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: albumService.getById(id),
+      future: playlistService.getById(id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -22,7 +23,13 @@ class DetailsPage extends StatelessWidget {
         } else if (!snapshot.hasData || snapshot.data == null) {
           return const Center(child: Text('Nenhum item encontrado'));
         } else {
-          final Album album = snapshot.data as Album;
+          final Playlist playlist = snapshot.data as Playlist;
+          final List<Artist> artists = playlist.songs
+              .map((song) => song.artists)
+              .expand((element) => element)
+              .toList();
+          final playlistArtists =
+              artists.take(3).map((artist) => artist.name).join(", ");
 
           return Scaffold(
             backgroundColor: Colors.black,
@@ -51,7 +58,7 @@ class DetailsPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
                         image: DecorationImage(
-                          image: NetworkImage(album.images.highQuality),
+                          image: NetworkImage(playlist.image),
                           fit: BoxFit.cover,
                         ),
                         border: Border.all(
@@ -64,7 +71,7 @@ class DetailsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Text(
-                      album.title,
+                      playlist.title,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -74,7 +81,7 @@ class DetailsPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    album.artists[0].name,
+                    playlistArtists,
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey[400],
@@ -130,71 +137,76 @@ class DetailsPage extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: album.songs.length,
+                    itemCount: playlist.songs.length,
                     itemBuilder: (context, index) {
-                      final song = album.songs[index];
+                      final song = playlist.songs[index];
                       return Padding(
                         padding:
-                            EdgeInsets.only(left: 12, right: 12, bottom: 16),
+                            EdgeInsets.only(left: 12, right: 12, bottom: 8),
                         child: InkWell(
-                          onTap: () {
-                            print('Linha da música clicada: ${song.title}');
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      song.title,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      album.artists
-                                          .map((artist) => artist.name)
-                                          .join(', '),
-                                      style: TextStyle(color: Colors.grey),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                        color: Colors.black,
-                                        height: 200,
-                                        child: Center(
-                                          child: Text(
-                                            'Opções para ${song.title}',
-                                            style:
-                                                TextStyle(color: Colors.white),
+                            onTap: () {
+                              print('Linha da música clicada: ${song.title}');
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: 8, right: 8, top: 4, bottom: 4),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          song.title,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
                                           ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
+                                        Text(
+                                          song.artists
+                                              .map((artist) => artist.name)
+                                              .join(', '),
+                                          style: TextStyle(color: Colors.grey),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Container(
+                                            color: Colors.black,
+                                            height: 200,
+                                            child: Center(
+                                              child: Text(
+                                                'Opções para ${song.title}',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(Icons.more_horiz,
-                                      color: Colors.white),
-                                ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Icon(Icons.more_horiz,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            )),
                       );
                     },
                   ),

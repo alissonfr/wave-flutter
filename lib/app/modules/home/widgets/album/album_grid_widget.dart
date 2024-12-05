@@ -38,7 +38,7 @@ class AlbumGridWidget extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          context.push('/details/${album.albumId}');
+          context.push('/album-details/${album.albumId}');
         },
         child: Row(
           children: [

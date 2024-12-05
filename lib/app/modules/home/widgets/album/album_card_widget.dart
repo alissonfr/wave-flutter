@@ -18,7 +18,7 @@ class AlbumCardWidget extends StatelessWidget {
       imageUrl: albumImage,
       title: albumTitle,
       subtitle: "Álbum • $albumArtists",
-      onTap: () => context.push('/details/${album.albumId}'),
+      onTap: () => context.push('/album-details/${album.albumId}'),
     );
   }
 }

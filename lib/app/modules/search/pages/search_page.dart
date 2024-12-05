@@ -1,6 +1,8 @@
 // ignore_for_file: camel_case_types, file_names
 
 import 'package:flutter/material.dart';
+import 'package:wave_flutter/app/models/entities/song.dart';
+import 'package:wave_flutter/app/service/album_service.dart';
 
 class Palette {
   static const MaterialColor primaryColor =
@@ -22,206 +24,177 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   ScrollController scrollController = ScrollController();
+  final TextEditingController searchController = TextEditingController();
   bool showSearchBar = false;
+  List<Song> allSongs = [];
+  List<Song> filteredSongs = [];
+
+  final AlbumService _albumService = AlbumService();
 
   @override
   void initState() {
-    scrollController = ScrollController()
-      ..addListener(() {
-        if (scrollController.offset > 93) {
-          showSearchBar = true;
-        } else {
-          showSearchBar = false;
-        }
-        setState(() {});
-      });
-
     super.initState();
+    _loadAlbums();
+    searchController.addListener(_filterAlbums);
+  }
+
+  Future<void> _loadAlbums() async {
+    var albums = await _albumService.get();
+    for (var album in albums) {
+      allSongs.addAll(album.songs);
+    }
+
+    setState(() {
+      filteredSongs = allSongs;
+    });
+  }
+
+  void _filterAlbums() {
+    String query = searchController.text.toLowerCase();
+    setState(() {
+      filteredSongs = allSongs.where((song) {
+        return song.title.toLowerCase().contains(query) ||
+            song.artists[0].name.toLowerCase().contains(query);
+      }).toList();
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(_filterAlbums);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          appBar:
-              AppBar(toolbarHeight: 0, backgroundColor: Palette.secondaryColor),
-          backgroundColor: Palette.secondaryColor,
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                controller: scrollController,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: Palette.secondaryColor,
+      ),
+      backgroundColor: Palette.secondaryColor,
+      body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 35),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 35),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text("Buscar",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                    color: Colors.white)),
-                            IconButton(
-                                onPressed: () {
-                                  print("");
-                                },
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: const Icon(Icons.camera_alt_outlined,
-                                    color: Colors.white))
-                          ],
+                      const Text(
+                        "Buscar",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Colors.white,
                         ),
                       ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                SizedBox(width: 5),
-                                Icon(Icons.search_sharp,
-                                    color: Palette.secondaryColor, size: 30),
-                                SizedBox(width: 4),
-                                Text("O que você quer ouvir?",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Palette.secondarySwatchColor),
-                                    textAlign: TextAlign.start,
-                                    overflow: TextOverflow.ellipsis)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15, bottom: 15),
-                        child: Row(
-                          children: const [
-                            Text("Navegar por todas as seções",
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis),
-                          ],
-                        ),
-                      ),
-                      GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 15,
-                                crossAxisSpacing: 15,
-                                childAspectRatio: 1.655),
-                        primary: false,
-                        shrinkWrap: true,
-                        itemCount: 12,
-                        itemBuilder: (BuildContext context, index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width:
-                                      (MediaQuery.of(context).size.width - 45) /
-                                          2,
-                                  height: 105,
-                                  decoration:
-                                      BoxDecoration(color: Colors.red.shade600),
-                                  child: Stack(
-                                    children: [
-                                      const Positioned(
-                                        top: 12,
-                                        left: 8,
-                                        child: Text("Podcasts",
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                color: Colors.white)),
-                                      ),
-                                      Positioned(
-                                          top: 15,
-                                          left: 136,
-                                          child: Transform(
-                                              transform: Matrix4.rotationZ(
-                                                (3.1415926535897932 / 7.2),
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Image.asset(
-                                                  "assets/images/dissect.jpg",
-                                                  height: 78,
-                                                  width: 78,
-                                                ),
-                                              )))
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
+                      IconButton(
+                        onPressed: () {
+                          print(""); // Adicione sua lógica aqui
                         },
-                      )
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        icon: const Icon(Icons.camera_alt_outlined,
+                            color: Colors.white),
+                      ),
                     ],
                   ),
                 ),
-              ),
-              Positioned(
-                top: 0,
-                child: InkWell(
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 0),
-                    opacity: showSearchBar ? 1 : 0,
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 15, right: 15, bottom: 10),
-                      color: Palette.secondaryColor,
-                      width: MediaQuery.of(context).size.width,
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            SizedBox(width: 5),
-                            Icon(Icons.search_sharp,
-                                color: Palette.secondaryColor, size: 30),
-                            SizedBox(width: 4),
-                            Text("What do you want to listen to?",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Palette.secondarySwatchColor),
-                                textAlign: TextAlign.start,
-                                overflow: TextOverflow.ellipsis)
-                          ],
-                        ),
-                      ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    hintText: 'Pesquisar por artista ou música...',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        )
-      ],
+                const SizedBox(height: 16),
+                // GridView para exibir os álbuns
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: filteredSongs.length,
+                  itemBuilder: (context, index) {
+                    final song = filteredSongs[index];
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 8),
+                      child: InkWell(
+                          onTap: () {
+                            print('Linha da música clicada: ${song.title}');
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 8, right: 8, top: 4, bottom: 4),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        song.title,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        song.artists
+                                            .map((artist) => artist.name)
+                                            .join(', '),
+                                        style: TextStyle(color: Colors.grey),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          color: Colors.black,
+                                          height: 200,
+                                          child: Center(
+                                            child: Text(
+                                              'Opções para ${song.title}',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(Icons.more_horiz,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    );
+                  },
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

@@ -1,30 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wave_flutter/app/core/providers/genre_state.dart';
+import 'package:wave_flutter/app/core/providers/playlist_state.dart';
 import 'package:wave_flutter/app/models/dto/home_section.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
 import 'package:wave_flutter/app/models/entities/playlist.dart';
 import 'package:wave_flutter/app/modules/home/widgets/album/album_grid_widget.dart';
-import 'package:wave_flutter/app/modules/home/widgets/playlist/playlist_section_widget.dart';
 import 'package:wave_flutter/app/modules/home/widgets/album/album_section_widget.dart';
+import 'package:wave_flutter/app/modules/home/widgets/playlist/playlist_section_widget.dart';
 import 'package:wave_flutter/app/modules/home/widgets/user_header_widget.dart';
 import 'package:wave_flutter/app/service/album_service.dart';
 import 'package:wave_flutter/app/service/playlist_service.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final AlbumService albumService = AlbumService();
   final PlaylistService playlistService = PlaylistService();
 
   @override
   Widget build(BuildContext context) {
     final selectedGenre = context.watch<GenreState>().selectedGenre;
+    final playlists = context.watch<PlaylistState>().playlists;
 
     return Scaffold(
       body: FutureBuilder(
         future: Future.wait([
           albumService.getHomeInfo(selectedGenre),
           albumService.getByGenre(selectedGenre),
-          playlistService.get()
+          playlistService.get(),
         ]),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -35,8 +44,12 @@ class HomePage extends StatelessWidget {
             final List<HomeSectionDTO> homeInfo =
                 snapshot.data?[0] as List<HomeSectionDTO>;
             final List<Album> filteredAlbums = snapshot.data?[1] as List<Album>;
-            final List<Playlist> playlists =
+            final List<Playlist> loadedPlaylists =
                 snapshot.data?[2] as List<Playlist>;
+
+            if (playlists.isEmpty) {
+              playlists.addAll(loadedPlaylists);
+            }
 
             return SingleChildScrollView(
               child: Column(
@@ -45,17 +58,9 @@ class HomePage extends StatelessWidget {
                 children: [
                   UserHeaderWidget(),
                   AlbumGridWidget(albums: filteredAlbums),
-                  ListView.builder(
-                    padding: EdgeInsets.only(top: 36.0),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: playlists.length,
-                    itemBuilder: (context, index) {
-                      return PlaylistSection(
-                        playlists: playlists,
-                      );
-                    },
-                  ),
+                  const SizedBox(height: 16.0),
+                  PlaylistSection(
+                      playlists: playlists), // Agora usa o estado atualizado
                   ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
