@@ -59,7 +59,7 @@ class PlaylistDetailsPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
                         image: DecorationImage(
-                          image: NetworkImage(playlist.image),
+                          image: AssetImage(playlist.image),
                           fit: BoxFit.cover,
                         ),
                         border: Border.all(

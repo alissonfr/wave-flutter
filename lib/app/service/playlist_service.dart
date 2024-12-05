@@ -39,7 +39,7 @@ class PlaylistService {
     Playlist newPlaylist = Playlist(
       playlistId: "${int.parse(lastPlaylist.playlistId) + 1}",
       title: 'Playlist #${int.parse(lastPlaylist.playlistId) + 1}',
-      image: "https://www.qobuz.com/assets-static/img/suggestion/default.png",
+      image: "assets/images/playlist.png",
       songs: songs,
     );
     _DATA.add(newPlaylist);

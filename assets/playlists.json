@@ -3,7 +3,7 @@
     {
       "playlistId": "1",
       "title": "Playlist #1",
-      "image": "https://www.qobuz.com/assets-static/img/suggestion/default.png",
+      "image": "assets/images/playlist.png",
       "songs": [
         { "songId": "1000", "title": "Juicy", "artists": [{ "artistId": "13", "name": "The Notorious B.I.G." }], "url": "assets/audios/classics/juicy.mp3" },
         { "songId": "1001", "title": "N.Y. State of Mind", "artists": [{ "artistId": "14", "name": "Nas" }], "url": "assets/audios/classics/ny_state_of_mind.mp3" },

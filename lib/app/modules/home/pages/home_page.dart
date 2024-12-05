@@ -23,6 +23,71 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final AlbumService albumService = AlbumService();
   final PlaylistService playlistService = PlaylistService();
+  final ScrollController _scrollController = ScrollController();
+  List<HomeSectionDTO> homeInfo = [];
+  int currentPage = 0;
+  final int itemsPerPage = 2;
+  bool isLoadingMore = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+    _loadInitialData();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _loadMoreData();
+    }
+  }
+
+  Future<void> _loadInitialData() async {
+    final selectedGenre = context.read<GenreState>().selectedGenre;
+    final List<HomeSectionDTO> initialHomeInfo =
+        await albumService.getHomeInfo(selectedGenre);
+    setState(() {
+      homeInfo = initialHomeInfo.take(itemsPerPage).toList();
+      currentPage = 1;
+    });
+  }
+
+  Future<void> _loadMoreData() async {
+    if (isLoadingMore) return;
+    setState(() {
+      isLoadingMore = true;
+    });
+
+    await Future.delayed(Duration(seconds: 1));
+    final selectedGenre = context.read<GenreState>().selectedGenre;
+    final List<HomeSectionDTO> newHomeInfo =
+        await albumService.getHomeInfo(selectedGenre);
+    final int startIndex = currentPage * itemsPerPage;
+    final int endIndex = startIndex + itemsPerPage;
+
+    setState(() {
+      var subList = newHomeInfo.sublist(startIndex,
+          endIndex > newHomeInfo.length ? newHomeInfo.length : endIndex);
+
+      if (subList.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Sem mais músicas para exibir!'),
+        ));
+        isLoadingMore = false;
+        return;
+      }
+      homeInfo.addAll(subList);
+      currentPage++;
+      isLoadingMore = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +97,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: FutureBuilder(
         future: Future.wait([
-          albumService.getHomeInfo(selectedGenre),
           albumService.getByGenre(selectedGenre),
           playlistService.get(),
         ]),
@@ -42,17 +106,16 @@ class _HomePageState extends State<HomePage> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Nenhum item encontrado'));
           } else {
-            final List<HomeSectionDTO> homeInfo =
-                snapshot.data?[0] as List<HomeSectionDTO>;
-            final List<Album> filteredAlbums = snapshot.data?[1] as List<Album>;
+            final List<Album> filteredAlbums = snapshot.data?[0] as List<Album>;
             final List<Playlist> loadedPlaylists =
-                snapshot.data?[2] as List<Playlist>;
+                snapshot.data?[1] as List<Playlist>;
 
             if (playlists.isEmpty) {
               playlists.addAll(loadedPlaylists);
             }
 
             return SingleChildScrollView(
+              controller: _scrollController,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -67,8 +130,14 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: homeInfo.length,
+                    itemCount: homeInfo.length + (isLoadingMore ? 1 : 0),
                     itemBuilder: (context, index) {
+                      if (index == homeInfo.length) {
+                        return const Padding(
+                          padding: EdgeInsets.only(bottom: 32),
+                          child: Center(child: CircularProgressIndicator()),
+                        );
+                      }
                       return AlbumSection(
                         title: homeInfo[index].title,
                         albums: homeInfo[index].albums,

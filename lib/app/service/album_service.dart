@@ -23,6 +23,23 @@ class AlbumService {
     return _DATA;
   }
 
+  Future<List<Song>> getSongs({int page = 1, int limit = 15}) async {
+    await _init();
+
+    List<Song> songs =
+        _DATA.map((album) => album.songs).expand((element) => element).toList();
+
+    int startIndex = (page - 1) * limit;
+    int endIndex = startIndex + limit;
+
+    if (page * limit > songs.length) {
+      return [];
+    }
+
+    return songs.sublist(
+        startIndex, endIndex > songs.length ? songs.length : endIndex);
+  }
+
   Future<Album> getById(final String id) async {
     await _init();
     return _DATA.firstWhere((album) => album.albumId == id);
@@ -48,8 +65,7 @@ class AlbumService {
       "Sugestões Baseadas no Seu Gosto",
       "Em Alta",
       "Músicas Recomendadas",
-      "Álbuns Clássicos",
-      "Hits do Momento"
+      "Álbuns Clássicos"
     ];
 
     for (int i = 0; i < titles.length; i++) {

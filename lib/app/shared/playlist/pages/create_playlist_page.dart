@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wave_flutter/app/core/providers/playlist_state.dart';
+import 'package:wave_flutter/app/core/theme/app_theme.dart';
 import 'package:wave_flutter/app/models/entities/song.dart';
 import 'package:wave_flutter/app/service/album_service.dart';
 import 'package:wave_flutter/app/service/playlist_service.dart';
-
-class Palette {
-  static const MaterialColor primaryColor =
-      MaterialColor(0xFF1DB954, <int, Color>{});
-
-  static const MaterialColor secondaryColor =
-      MaterialColor(0xFF121212, <int, Color>{});
-
-  static const MaterialColor secondarySwatchColor =
-      MaterialColor(0xFF2A2A2A, <int, Color>{});
-}
 
 class CreatePlaylistPage extends StatefulWidget {
   const CreatePlaylistPage({Key? key}) : super(key: key);
@@ -114,7 +104,7 @@ class _SearchPageState extends State<CreatePlaylistPage> {
                           child: Text(
                             'Salvar',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.primaries.first,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -193,9 +183,7 @@ class _SearchPageState extends State<CreatePlaylistPage> {
                                     ),
                                   ),
                                   Icon(
-                                    isSelected
-                                        ? Icons.check_circle
-                                        : Icons.add_circle,
+                                    isSelected ? Icons.check : Icons.add,
                                     color: isSelected
                                         ? Colors.primaries.first
                                         : Colors.white,

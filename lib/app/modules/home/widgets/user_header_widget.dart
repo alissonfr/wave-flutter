@@ -28,8 +28,8 @@ class _UserHeaderState extends State<UserHeaderWidget> {
               children: [
                 CircleAvatar(
                   radius: 24,
-                  backgroundImage: NetworkImage(
-                    'https://via.placeholder.com/150',
+                  backgroundImage: AssetImage(
+                    'assets/images/user.png',
                   ),
                 ),
                 const SizedBox(width: 16),

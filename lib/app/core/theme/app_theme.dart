@@ -10,3 +10,11 @@ class AppTheme {
     scaffoldBackgroundColor: Color(0xFF121212),
   );
 }
+
+class Palette {
+  static const MaterialColor secondaryColor =
+      MaterialColor(0xFF121212, <int, Color>{});
+
+  static const MaterialColor secondarySwatchColor =
+      MaterialColor(0xFF2A2A2A, <int, Color>{});
+}

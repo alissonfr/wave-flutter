@@ -26,12 +26,19 @@ class CardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                imageUrl,
-                width: 150,
-                height: 150,
-                fit: BoxFit.cover,
-              ),
+              Uri.tryParse(imageUrl)?.hasAbsolutePath ?? false
+                  ? Image.network(
+                      imageUrl,
+                      width: 150,
+                      height: 150,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      imageUrl,
+                      width: 150,
+                      height: 150,
+                      fit: BoxFit.cover,
+                    ),
               const SizedBox(height: 8.0),
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),
