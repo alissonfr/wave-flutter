@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
 import 'package:go_router/go_router.dart';
 
-class AlbumCard extends StatelessWidget {
+class AlbumCardWidget extends StatelessWidget {
   final Album album;
 
-  AlbumCard({required this.album});
+  AlbumCardWidget({required this.album});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
-
-import 'album_card.dart';
+import 'package:wave_flutter/app/modules/home/widgets/album_card_widget.dart';
 
 class SectionWidget extends StatelessWidget {
   final String title;
@@ -34,7 +33,7 @@ class SectionWidget extends StatelessWidget {
               itemCount: albums.length,
               itemBuilder: (context, index) {
                 final album = albums[index];
-                return AlbumCard(album: album);
+                return AlbumCardWidget(album: album);
               },
             ),
           ),

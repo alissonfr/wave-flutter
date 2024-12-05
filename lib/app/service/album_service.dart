@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:wave_flutter/app/models/dto/home_section.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
+import 'package:wave_flutter/app/models/enums/genres.dart';
 
 class AlbumService {
   List<Album> _DATA = [];
@@ -61,13 +62,20 @@ class AlbumService {
     return sections;
   }
 
-  Future<List<Map<String, String>>> getCategories() async {
-    const List<Map<String, String>> filters = [
-      {"label": "Tudo", "value": "ALL"},
-      {"label": "Hip-hop", "value": "Hip-hop"},
-      {"label": "Rock", "value": "ROCK"}
-    ];
+  Future<List<Album>> getByGenre(GenresEnum genre) async {
+    await _init();
 
-    return filters;
+    if (genre == GenresEnum.ALL) return _DATA;
+
+    return _DATA.where((album) {
+      return album.genres.any((albumGenre) =>
+          albumGenre.name.toLowerCase() == genre.name.toLowerCase());
+    }).toList();
+  }
+
+  Future<List<Map<String, String>>> getGenres() async {
+    return GenresEnum.values
+        .map((category) => {"label": category.label, "value": category.name})
+        .toList();
   }
 }

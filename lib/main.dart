@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:wave_flutter/app/core/providers/album_genre_state.dart';
 import 'package:wave_flutter/app/core/theme/app_theme.dart';
 import 'package:wave_flutter/app/modules/home/home_module.dart';
 import 'package:wave_flutter/app/modules/library/library_module.dart';
@@ -7,7 +9,12 @@ import 'package:wave_flutter/app/modules/search/search_module.dart';
 import 'package:wave_flutter/app/shared/pages/details/details_module.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AlbumGenreState(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
