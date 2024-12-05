@@ -49,16 +49,25 @@ class AlbumDetailsPage extends StatelessWidget {
                     child: Container(
                       width: 300,
                       height: 300,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        image: DecorationImage(
-                          image: NetworkImage(album.images.highQuality),
-                          fit: BoxFit.cover,
-                        ),
-                        border: Border.all(
-                          color: Colors.grey.shade800,
-                          width: 1.0,
-                        ),
+                      child: Image.network(
+                        album.images.highQuality,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        (loadingProgress.expectedTotalBytes ??
+                                            1)
+                                    : null,
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ),
