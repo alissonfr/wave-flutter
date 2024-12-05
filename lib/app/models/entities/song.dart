@@ -9,12 +9,14 @@ class Song {
   final String title;
   final List<Artist> artists;
   final String url;
+  final String? image;
 
   Song({
     required this.songId,
     required this.title,
     required this.artists,
     required this.url,
+    this.image,
   });
 
   factory Song.fromJson(Map<String, dynamic> json) => _$SongFromJson(json);

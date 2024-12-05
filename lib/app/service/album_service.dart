@@ -10,7 +10,7 @@ class AlbumService {
   List<Album> _DATA = [];
 
   Future<void> _init() async {
-    final String jsonString = await rootBundle.loadString('assets/music.json');
+    final String jsonString = await rootBundle.loadString('assets/albums.json');
     Map<String, dynamic> albumMap = jsonDecode(jsonString);
     _DATA = (albumMap['albums'] as List)
         .map((albumJson) => Album.fromJson(albumJson))

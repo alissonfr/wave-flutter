@@ -13,6 +13,7 @@ Song _$SongFromJson(Map<String, dynamic> json) => Song(
           .map((e) => Artist.fromJson(e as Map<String, dynamic>))
           .toList(),
       url: json['url'] as String,
+      image: json['image'] as String?,
     );
 
 Map<String, dynamic> _$SongToJson(Song instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$SongToJson(Song instance) => <String, dynamic>{
       'title': instance.title,
       'artists': instance.artists,
       'url': instance.url,
+      'image': instance.image,
     };

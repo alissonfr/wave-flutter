@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:wave_flutter/app/models/entities/album.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wave_flutter/app/models/entities/artist.dart';
+import 'package:wave_flutter/app/models/entities/playlist.dart';
 
-class AlbumCardWidget extends StatelessWidget {
-  final Album album;
+class PlaylistCardWidget extends StatelessWidget {
+  final Playlist playlist;
 
-  AlbumCardWidget({required this.album});
+  PlaylistCardWidget({required this.playlist});
 
   @override
   Widget build(BuildContext context) {
-    final albumImage = album.images.lowQuality;
-    final albumTitle = album.title;
-    final albumArtists = album.artists.map((artist) => artist.name).join(", ");
+    final playlistImage = playlist.image;
+    final playlistTitle = playlist.title;
+    final List<Artist> artists = playlist.songs
+        .map((song) => song.artists)
+        .expand((element) => element)
+        .toList();
+    final playlistArtists =
+        artists.take(3).map((artist) => artist.name).join(", ");
 
     return InkWell(
         onTap: () {
-          context.push('/details/${album.albumId}');
+          context.push('/details/${playlist.playlistId}');
         },
         child: Card(
           color: Colors.transparent,
@@ -28,7 +34,7 @@ class AlbumCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.network(
-                  albumImage,
+                  playlistImage,
                   width: 150,
                   height: 150,
                   fit: BoxFit.cover,
@@ -40,7 +46,7 @@ class AlbumCardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        albumTitle,
+                        playlistTitle,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -50,7 +56,7 @@ class AlbumCardWidget extends StatelessWidget {
                         maxLines: 1,
                       ),
                       Text(
-                        "Álbum • ${albumArtists}",
+                        "Playlist • ${playlistArtists}",
                         style: TextStyle(
                           color: Colors.grey,
                           overflow: TextOverflow.ellipsis,
