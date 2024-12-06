@@ -11,7 +11,6 @@ class PlaylistSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(playlists);
     return SectionWidget<Playlist>(
       title: "Minhas Playlists",
       items: playlists,

@@ -77,13 +77,16 @@ class SongDetailMenu extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  Expanded(
+                      child: Text(
                     song.title,
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
-                  ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: Text(
