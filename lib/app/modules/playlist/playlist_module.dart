@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wave_flutter/app/shared/playlist/pages/create_playlist_page.dart';
+import 'package:wave_flutter/app/modules/playlist/pages/create_playlist_page.dart';
 
 class PlaylistModule extends StatefulWidget {
   const PlaylistModule({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wave_flutter/app/shared/details/pages/album_details_page.dart';
+import 'package:wave_flutter/app/modules/details/pages/album_details_page.dart';
 
 class AlbumDetailsModule extends StatelessWidget {
   final id;

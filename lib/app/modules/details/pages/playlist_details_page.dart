@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wave_flutter/app/models/entities/album.dart';
-import 'package:wave_flutter/app/service/album_service.dart';
-import 'package:wave_flutter/app/shared/song_detail_menu.dart';
+import 'package:wave_flutter/app/models/entities/artist.dart';
+import 'package:wave_flutter/app/models/entities/playlist.dart';
+import 'package:wave_flutter/app/service/playlist_service.dart';
+import 'package:wave_flutter/app/shared/widgets/song_detail_menu.dart';
 
-class AlbumDetailsPage extends StatelessWidget {
-  final AlbumService albumService = AlbumService();
+class PlaylistDetailsPage extends StatelessWidget {
+  final PlaylistService playlistService = PlaylistService();
   final String id;
 
-  AlbumDetailsPage({Key? key, required this.id}) : super(key: key);
+  PlaylistDetailsPage({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: albumService.getById(id),
+      future: playlistService.getById(id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -23,7 +24,13 @@ class AlbumDetailsPage extends StatelessWidget {
         } else if (!snapshot.hasData || snapshot.data == null) {
           return const Center(child: Text('Nenhum item encontrado'));
         } else {
-          final Album album = snapshot.data as Album;
+          final Playlist playlist = snapshot.data as Playlist;
+          final List<Artist> artists = playlist.songs
+              .map((song) => song.artists)
+              .expand((element) => element)
+              .toList();
+          final playlistArtists =
+              artists.take(3).map((artist) => artist.name).join(", ");
 
           return Scaffold(
             backgroundColor: Colors.black,
@@ -49,32 +56,23 @@ class AlbumDetailsPage extends StatelessWidget {
                     child: Container(
                       width: 300,
                       height: 300,
-                      child: Image.network(
-                        album.images.highQuality,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          } else {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        (loadingProgress.expectedTotalBytes ??
-                                            1)
-                                    : null,
-                              ),
-                            );
-                          }
-                        },
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        image: DecorationImage(
+                          image: AssetImage(playlist.image),
+                          fit: BoxFit.cover,
+                        ),
+                        border: Border.all(
+                          color: Colors.grey.shade800,
+                          width: 1.0,
+                        ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Text(
-                      album.title,
+                      playlist.title,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -84,7 +82,7 @@ class AlbumDetailsPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    album.artists[0].name,
+                    playlistArtists,
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey[400],
@@ -140,9 +138,9 @@ class AlbumDetailsPage extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: album.songs.length,
+                    itemCount: playlist.songs.length,
                     itemBuilder: (context, index) {
-                      final song = album.songs[index];
+                      final song = playlist.songs[index];
                       return Padding(
                         padding:
                             EdgeInsets.only(left: 12, right: 12, bottom: 8),
@@ -172,7 +170,7 @@ class AlbumDetailsPage extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         Text(
-                                          album.artists
+                                          song.artists
                                               .map((artist) => artist.name)
                                               .join(', '),
                                           style: TextStyle(color: Colors.grey),

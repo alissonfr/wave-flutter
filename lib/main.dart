@@ -9,9 +9,9 @@ import 'package:wave_flutter/app/core/theme/app_theme.dart';
 import 'package:wave_flutter/app/modules/home/home_module.dart';
 import 'package:wave_flutter/app/modules/library/library_module.dart';
 import 'package:wave_flutter/app/modules/search/search_module.dart';
-import 'package:wave_flutter/app/shared/details/album_details_module.dart';
-import 'package:wave_flutter/app/shared/details/playlist_details_module.dart';
-import 'package:wave_flutter/app/shared/playlist/playlist_module.dart';
+import 'package:wave_flutter/app/modules/details/album_details_module.dart';
+import 'package:wave_flutter/app/modules/details/playlist_details_module.dart';
+import 'package:wave_flutter/app/modules/playlist/playlist_module.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
