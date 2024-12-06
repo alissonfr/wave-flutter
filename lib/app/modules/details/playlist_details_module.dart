@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wave_flutter/app/shared/details/pages/Playlist_details_page.dart';
+import 'package:wave_flutter/app/modules/details/pages/playlist_details_page.dart';
 
 class PlaylistDetailsModule extends StatelessWidget {
   final id;
