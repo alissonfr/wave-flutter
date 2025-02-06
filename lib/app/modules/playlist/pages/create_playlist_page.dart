@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wave_flutter/app/core/providers/playlist_state.dart';
 import 'package:wave_flutter/app/core/theme/app_theme.dart';
+import 'package:wave_flutter/app/models/entities/playlist.dart';
 import 'package:wave_flutter/app/models/entities/song.dart';
 import 'package:wave_flutter/app/service/album_service.dart';
 import 'package:wave_flutter/app/service/playlist_service.dart';
@@ -32,7 +33,7 @@ class _SearchPageState extends State<CreatePlaylistPage> {
   }
 
   Future<void> _loadAlbums() async {
-    var albums = await _albumService.get();
+    var albums = await _albumService.find();
     for (var album in albums) {
       allSongs.addAll(album.songs);
     }
@@ -44,8 +45,9 @@ class _SearchPageState extends State<CreatePlaylistPage> {
 
   void _filterAlbums() {
     String query = searchController.text.toLowerCase();
-    setState(() {
-      filteredSongs = _albumService.filterSongsByQuery(allSongs, query);
+    setState(() async {
+      // filteredSongs = _albumService.filterSongsByQuery(allSongs, query);
+      filteredSongs = await _albumService.getSongs();
     });
   }
 
@@ -93,9 +95,10 @@ class _SearchPageState extends State<CreatePlaylistPage> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {
+                        onTap: () async {
                           final playlistState = context.read<PlaylistState>();
-                          var newPlaylist = _playlistService.add(selectedSongs);
+                          Playlist newPlaylist =
+                              await _playlistService.create(selectedSongs);
                           playlistState.addPlaylist(newPlaylist);
                           Navigator.pop(context);
                         },

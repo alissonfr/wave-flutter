@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder(
         future: Future.wait([
           albumService.getByGenre(selectedGenre),
-          playlistService.get(),
+          playlistService.find(),
         ]),
         builder: (context, snapshot) {
           if (snapshot.hasError) {

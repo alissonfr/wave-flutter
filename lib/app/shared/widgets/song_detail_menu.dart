@@ -191,7 +191,7 @@ class SongDetailMenu extends StatelessWidget {
   }
 
   void _showAddToPlaylistMenu(BuildContext context) async {
-    final playlists = await playlistService.get();
+    final playlists = await playlistService.find();
     final selectedPlaylist = await showDialog<Playlist>(
       context: context,
       builder: (context) {
@@ -217,7 +217,8 @@ class SongDetailMenu extends StatelessWidget {
     );
 
     if (selectedPlaylist != null) {
-      playlistService.update(selectedPlaylist.playlistId, [song]);
+      selectedPlaylist.songs.add(song);
+      playlistService.update(selectedPlaylist.playlistId, selectedPlaylist);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Música adicionada à ${selectedPlaylist.title}!'),
       ));
