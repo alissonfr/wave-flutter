@@ -30,7 +30,6 @@ class PlaylistService {
   }
 
   Future<List<Playlist>> find() async {
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     final Response response = await http.get(Uri.parse(baseUrl));
 
     if (response.statusCode == 200) {

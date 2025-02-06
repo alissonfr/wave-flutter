@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 
 class AuthProvider with ChangeNotifier {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final logger = Logger();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   User? _user;
   bool _isLoading = true;
 
@@ -15,24 +18,34 @@ class AuthProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
 
   Future<void> login(String email, String password) async {
+    _setLoading(true);
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } catch (e) {
-      print(e);
+      logger.e(e);
+    } finally {
+      _setLoading(false);
     }
   }
 
   Future<void> logout() async {
-    await _auth.signOut();
+    _setLoading(true);
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      logger.e(e);
+    } finally {
+      _setLoading(false);
+    }
   }
 
   void _onAuthStateChanged(User? user) {
     _user = user;
-    _isLoading = false;
-    notifyListeners();
+    _setLoading(false);
   }
 
   Future<void> signInWithGoogle() async {
+    _setLoading(true);
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) return;
@@ -47,7 +60,14 @@ class AuthProvider with ChangeNotifier {
 
       await _auth.signInWithCredential(credential);
     } catch (e) {
-      print('Erro ao fazer login com Google: $e');
+      logger.e(e);
+    } finally {
+      _setLoading(false);
     }
+  }
+
+  void _setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
   }
 }

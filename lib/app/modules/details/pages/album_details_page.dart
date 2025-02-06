@@ -18,7 +18,6 @@ class AlbumDetailsPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          print(snapshot);
           return const Center(child: Text('Erro ao carregar dados'));
         } else if (!snapshot.hasData || snapshot.data == null) {
           return const Center(child: Text('Nenhum item encontrado'));

@@ -4,7 +4,7 @@ import 'package:wave_flutter/app/models/entities/playlist.dart';
 class PlaylistState extends ChangeNotifier {
   List<Playlist> _playlists = [];
 
-  List<Playlist> get playlists => _playlists;
+  List<Playlist> get playlists => List.unmodifiable(_playlists);
 
   void addPlaylist(Playlist playlist) {
     _playlists.add(playlist);
@@ -12,8 +12,7 @@ class PlaylistState extends ChangeNotifier {
   }
 
   void setPlaylists(List<Playlist> playlists) {
-    _playlists.clear();
-    _playlists.addAll(playlists);
+    _playlists = List.from(playlists);
     notifyListeners();
   }
 }

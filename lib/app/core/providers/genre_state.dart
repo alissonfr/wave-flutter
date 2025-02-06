@@ -10,4 +10,9 @@ class GenreState extends ChangeNotifier {
     _selectedGenre = genre;
     notifyListeners();
   }
+
+  void resetGenre() {
+    _selectedGenre = GenresEnum.ALL;
+    notifyListeners();
+  }
 }
