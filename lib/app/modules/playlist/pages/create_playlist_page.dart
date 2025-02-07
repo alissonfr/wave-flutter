@@ -18,9 +18,8 @@ class _SearchPageState extends State<CreatePlaylistPage> {
   ScrollController scrollController = ScrollController();
   final TextEditingController searchController = TextEditingController();
   bool showSearchBar = false;
-  List<Song> allSongs = [];
-  List<Song> filteredSongs = [];
-  List<Song> selectedSongs = []; // Lista de músicas selecionadas
+  List<Song> songs = [];
+  List<Song> selectedSongs = [];
 
   final AlbumService _albumService = AlbumService();
   final PlaylistService _playlistService = PlaylistService();
@@ -28,26 +27,36 @@ class _SearchPageState extends State<CreatePlaylistPage> {
   @override
   void initState() {
     super.initState();
-    _loadAlbums();
+    _loadSongs();
     searchController.addListener(_filterAlbums);
   }
 
-  Future<void> _loadAlbums() async {
-    var albums = await _albumService.find();
-    for (var album in albums) {
-      allSongs.addAll(album.songs);
-    }
-
+  Future<void> _loadSongs() async {
+    var res = await _albumService.getSongs();
     setState(() {
-      filteredSongs = allSongs;
+      if (res.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Sem mais músicas para exibir!'),
+        ));
+        return;
+      }
+
+      songs.addAll(res);
     });
   }
 
-  void _filterAlbums() {
+  void _filterAlbums() async {
     String query = searchController.text.toLowerCase();
-    setState(() async {
-      // filteredSongs = _albumService.filterSongsByQuery(allSongs, query);
-      filteredSongs = await _albumService.getSongs();
+    List<Song> res = await _albumService.getSongs(title: query);
+
+    Set<String> selectedSongIds =
+        selectedSongs.map((song) => song.songId).toSet();
+
+    setState(() {
+      songs = [
+        ...selectedSongs,
+        ...res.where((song) => !selectedSongIds.contains(song.songId))
+      ];
     });
   }
 
@@ -132,9 +141,9 @@ class _SearchPageState extends State<CreatePlaylistPage> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: filteredSongs.length,
+                  itemCount: songs.length,
                   itemBuilder: (context, index) {
-                    final song = filteredSongs[index];
+                    final song = songs[index];
                     final isSelected = selectedSongs.contains(song);
 
                     return Padding(

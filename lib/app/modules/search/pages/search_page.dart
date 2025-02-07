@@ -19,8 +19,7 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   bool showSearchBar = false;
-  List<Song> allSongs = [];
-  List<Song> filteredSongs = [];
+  List<Song> songs = [];
   int currentPage = 1;
   bool isLoading = false;
 
@@ -29,21 +28,20 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    _loadAlbums();
+    _loadSongs();
     searchController.addListener(_filterAlbums);
     _scrollController.addListener(_onScroll);
   }
 
-  Future<void> _loadAlbums({int page = 1}) async {
+  Future<void> _loadSongs({int page = 1}) async {
     if (isLoading) return;
     setState(() {
       isLoading = true;
     });
 
-    await Future.delayed(Duration(seconds: 1));
-    var songs = await _albumService.getSongs(page: page);
+    var res = await _albumService.getSongs(page: page);
     setState(() {
-      if (songs.isEmpty) {
+      if (res.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Sem mais músicas para exibir!'),
         ));
@@ -51,27 +49,25 @@ class _SearchPageState extends State<SearchPage> {
         return;
       }
 
-      allSongs.addAll(songs);
-      filteredSongs = allSongs;
+      songs.addAll(res);
       currentPage = page;
       isLoading = false;
     });
   }
 
-  void _filterAlbums() {
+  void _filterAlbums() async {
     String query = searchController.text.toLowerCase();
+    List<Song> filteredSongs = await _albumService.getSongs(title: query);
+
     setState(() {
-      filteredSongs = allSongs.where((song) {
-        return song.title.toLowerCase().contains(query) ||
-            song.artists[0].name.toLowerCase().contains(query);
-      }).toList();
+      songs = filteredSongs;
     });
   }
 
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
-      _loadAlbums(page: currentPage + 1);
+      _loadSongs(page: currentPage + 1);
     }
   }
 
@@ -102,7 +98,7 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
               child: SongListWidget(
                 scrollController: _scrollController,
-                songs: filteredSongs,
+                songs: songs,
                 isLoading: isLoading,
               ),
             ),

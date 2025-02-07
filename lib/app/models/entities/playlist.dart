@@ -17,6 +17,12 @@ class Playlist {
     required this.songs,
   });
 
+  Playlist.simple({
+    required this.image,
+    required this.songs,
+  })  : playlistId = '',
+        title = '';
+
   factory Playlist.fromJson(Map<String, dynamic> json) =>
       _$PlaylistFromJson(json);
   Map<String, dynamic> toJson() => _$PlaylistToJson(this);

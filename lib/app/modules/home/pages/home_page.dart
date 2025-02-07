@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _loadInitialData() async {
     final selectedGenre = context.read<GenreState>().selectedGenre;
     final List<HomeSectionDTO> initialHomeInfo =
-        await albumService.getHomeInfo(selectedGenre);
+        await albumService.getTrendings(selectedGenre);
     setState(() {
       homeInfo = initialHomeInfo.take(itemsPerPage).toList();
       currentPage = 1;
@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
     await Future.delayed(Duration(seconds: 1));
     final selectedGenre = context.read<GenreState>().selectedGenre;
     final List<HomeSectionDTO> newHomeInfo =
-        await albumService.getHomeInfo(selectedGenre);
+        await albumService.getTrendings(selectedGenre);
     final int startIndex = currentPage * itemsPerPage;
     final int endIndex = startIndex + itemsPerPage;
 

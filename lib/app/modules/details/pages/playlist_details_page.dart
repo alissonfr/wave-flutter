@@ -19,7 +19,6 @@ class PlaylistDetailsPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          print(snapshot);
           return const Center(child: Text('Erro ao carregar dados'));
         } else if (!snapshot.hasData || snapshot.data == null) {
           return const Center(child: Text('Nenhum item encontrado'));
@@ -90,51 +89,52 @@ class PlaylistDetailsPage extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   Padding(
-                      padding: EdgeInsets.only(top: 16, bottom: 32),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              print('Reproduzir');
-                            },
-                            icon: Icon(Icons.play_arrow,
-                                color: Colors.primaries.first),
-                            label: Text('Reproduzir',
-                                style: TextStyle(
-                                    color: Colors.primaries.first,
-                                    fontWeight: FontWeight.bold)),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF1C1C1E),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 30),
+                    padding: EdgeInsets.only(top: 16, bottom: 32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            print('Reproduzir');
+                          },
+                          icon: Icon(Icons.play_arrow,
+                              color: Colors.primaries.first),
+                          label: Text('Reproduzir',
+                              style: TextStyle(
+                                  color: Colors.primaries.first,
+                                  fontWeight: FontWeight.bold)),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF1C1C1E),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 30),
                           ),
-                          SizedBox(width: 20),
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              print('Aleatório');
-                            },
-                            icon: Icon(Icons.shuffle,
-                                color: Colors.primaries.first),
-                            label: Text('Aleatório',
-                                style: TextStyle(
-                                    color: Colors.primaries.first,
-                                    fontWeight: FontWeight.bold)),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF1C1C1E),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 30),
+                        ),
+                        SizedBox(width: 20),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            print('Aleatório');
+                          },
+                          icon: Icon(Icons.shuffle,
+                              color: Colors.primaries.first),
+                          label: Text('Aleatório',
+                              style: TextStyle(
+                                  color: Colors.primaries.first,
+                                  fontWeight: FontWeight.bold)),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF1C1C1E),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 30),
                           ),
-                        ],
-                      )),
+                        ),
+                      ],
+                    ),
+                  ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -145,45 +145,45 @@ class PlaylistDetailsPage extends StatelessWidget {
                         padding:
                             EdgeInsets.only(left: 12, right: 12, bottom: 8),
                         child: InkWell(
-                            onTap: () {
-                              print('Linha da música clicada: ${song.title}');
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8, right: 8, top: 4, bottom: 4),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          song.title,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
+                          onTap: () {
+                            print('Linha da música clicada: ${song.title}');
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 8, right: 8, top: 4, bottom: 4),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        song.title,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        Text(
-                                          song.artists
-                                              .map((artist) => artist.name)
-                                              .join(', '),
-                                          style: TextStyle(color: Colors.grey),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        song.artists
+                                            .map((artist) => artist.name)
+                                            .join(', '),
+                                        style: TextStyle(color: Colors.grey),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
                                   ),
-                                  SongDetailMenu(song: song),
-                                ],
-                              ),
-                            )),
+                                ),
+                                SongDetailMenu(song: song),
+                              ],
+                            ),
+                          ),
+                        ),
                       );
                     },
                   ),

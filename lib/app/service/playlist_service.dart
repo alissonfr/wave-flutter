@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:wave_flutter/app/models/entities/playlist.dart';
@@ -9,9 +8,7 @@ class PlaylistService {
   static const String baseUrl = 'http://localhost:3001/playlists';
 
   Future<Playlist> create(final List<Song> songs) async {
-    Playlist playlist = Playlist(
-      playlistId: Random().nextInt(1000).toString(),
-      title: 'Playlist #1',
+    Playlist playlist = Playlist.simple(
       image: "assets/images/playlist.png",
       songs: songs,
     );

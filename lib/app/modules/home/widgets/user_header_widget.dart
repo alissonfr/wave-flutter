@@ -51,7 +51,7 @@ class _UserHeaderState extends State<UserHeaderWidget> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: FutureBuilder(
-                      future: albumService.getGenres(),
+                      future: albumService.getTrendingGenres(),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return const Center(

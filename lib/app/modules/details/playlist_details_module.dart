@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wave_flutter/app/modules/details/pages/playlist_details_page.dart';
 
 class PlaylistDetailsModule extends StatelessWidget {
-  final id;
+  final String id;
 
   const PlaylistDetailsModule({Key? key, required this.id}) : super(key: key);
 
