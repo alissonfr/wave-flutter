@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wave_flutter/app/core/providers/genre_state.dart';
-import 'package:wave_flutter/app/models/enums/genres.dart';
+import 'package:wave_flutter/app/models/entities/genre.dart';
 import 'package:wave_flutter/app/service/album_service.dart';
 import 'package:wave_flutter/app/core/providers/auth_provider.dart';
 
@@ -18,7 +18,6 @@ class _UserHeaderState extends State<UserHeaderWidget> {
   @override
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
-    final genreState = context.watch<GenreState>();
 
     return SafeArea(
       child: Padding(
@@ -61,39 +60,14 @@ class _UserHeaderState extends State<UserHeaderWidget> {
                           return const Center(
                               child: Text('Nenhum item encontrado'));
                         } else {
-                          final List<Map<String, String>> filters =
-                              snapshot.data as List<Map<String, String>>;
+                          final List<Genre> genres =
+                              snapshot.data as List<Genre>;
 
                           return Row(
-                            children: filters.map((filter) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 4.0),
-                                child: FilterChip(
-                                  label: Text(filter["label"]!),
-                                  selected: genreState.selectedGenre ==
-                                      GenresEnum.fromValue(filter["value"]!),
-                                  onSelected: (isSelected) {
-                                    genreState.setGenre(
-                                        GenresEnum.fromValue(filter["value"]!));
-                                  },
-                                  selectedColor: Colors.primaries.first,
-                                  backgroundColor: Colors.grey[800],
-                                  labelStyle: TextStyle(
-                                    fontSize: 12,
-                                    color: genreState.selectedGenre ==
-                                            filter["value"]
-                                        ? Colors.white
-                                        : Colors.white,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    side: BorderSide(color: Colors.transparent),
-                                  ),
-                                  showCheckmark: false,
-                                ),
-                              );
-                            }).toList(),
+                            children: [
+                              _showGenre(Genre.simple(name: 'Todos')),
+                              ...genres.map((genre) => _showGenre(genre))
+                            ],
                           );
                         }
                       },
@@ -104,6 +78,36 @@ class _UserHeaderState extends State<UserHeaderWidget> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _showGenre(Genre genre) {
+    final genreState = context.watch<GenreState>();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: FilterChip(
+        label: Text(genre.name),
+        selected: genreState.selectedGenre?.genreId == genre.genreId ||
+            (genreState.selectedGenre?.genreId == null &&
+                genre.genreId.isEmpty),
+        onSelected: (isSelected) {
+          genreState.setGenre(genre);
+        },
+        selectedColor: Colors.primaries.first,
+        backgroundColor: Colors.grey[800],
+        labelStyle: TextStyle(
+          fontSize: 12,
+          color: genreState.selectedGenre?.genreId == genre.genreId
+              ? Colors.white
+              : Colors.white,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: Colors.transparent),
+        ),
+        showCheckmark: false,
       ),
     );
   }

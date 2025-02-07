@@ -6,7 +6,6 @@ import 'package:wave_flutter/app/core/providers/playlist_state.dart';
 import 'package:wave_flutter/app/models/dto/home_section.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
 import 'package:wave_flutter/app/models/entities/playlist.dart';
-import 'package:wave_flutter/app/models/enums/genres.dart';
 import 'package:wave_flutter/app/modules/home/widgets/album/album_grid_widget.dart';
 import 'package:wave_flutter/app/modules/home/widgets/album/album_section_widget.dart';
 import 'package:wave_flutter/app/modules/home/widgets/playlist/playlist_section_widget.dart';
@@ -34,6 +33,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    _loadInitialData();
+    context.read<GenreState>().addListener(_onGenreChange);
+  }
+
+  void _onGenreChange() {
     _loadInitialData();
   }
 
@@ -99,7 +103,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: FutureBuilder(
         future: Future.wait([
-          albumService.getByGenre(selectedGenre),
+          albumService.find(selectedGenre),
           playlistService.find(),
         ]),
         builder: (context, snapshot) {
@@ -126,7 +130,8 @@ class _HomePageState extends State<HomePage> {
                   AlbumGridWidget(albums: filteredAlbums),
                   const SizedBox(height: 16.0),
                   authProvider.user != null &&
-                          selectedGenre.name == GenresEnum.ALL.name
+                          (selectedGenre == null ||
+                              selectedGenre.genreId.isEmpty)
                       ? PlaylistSection(playlists: playlists)
                       : const SizedBox(),
                   ListView.builder(

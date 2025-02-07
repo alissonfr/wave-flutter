@@ -12,6 +12,10 @@ class Genre {
     required this.name,
   });
 
+  Genre.simple({
+    required this.name,
+  }) : genreId = '';
+
   factory Genre.fromJson(Map<String, dynamic> json) => _$GenreFromJson(json);
   Map<String, dynamic> toJson() => _$GenreToJson(this);
 }

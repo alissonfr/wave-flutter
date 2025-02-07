@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wave_flutter/app/models/dto/home_section.dart';
 import 'package:wave_flutter/app/models/entities/album.dart';
+import 'package:wave_flutter/app/models/entities/genre.dart';
 import 'package:wave_flutter/app/models/entities/song.dart';
-import 'package:wave_flutter/app/models/enums/genres.dart';
 
 class AlbumService {
   static const String baseUrl = 'http://localhost:3000/albums';
@@ -22,8 +22,10 @@ class AlbumService {
     return Album.fromJson(jsonDecode(response.body));
   }
 
-  Future<List<Album>> find() async {
-    final response = await http.get(Uri.parse(baseUrl));
+  Future<List<Album>> find(Genre? genre) async {
+    final response = genre == null
+        ? await http.get(Uri.parse(baseUrl))
+        : await http.get(Uri.parse('$baseUrl?genreId=${genre.genreId}'));
 
     if (response.statusCode != 200) {
       throw Exception('Falha ao carregar álbuns');
@@ -65,8 +67,11 @@ class AlbumService {
     }
   }
 
-  Future<List<HomeSectionDTO>> getTrendings(GenresEnum genre) async {
-    final response = await http.get(Uri.parse('$baseUrl/trendings'));
+  Future<List<HomeSectionDTO>> getTrendings(Genre? genre) async {
+    final response = genre == null
+        ? await http.get(Uri.parse('$baseUrl/trending-albums'))
+        : await http.get(
+            Uri.parse('$baseUrl/trending-albums?genreId=${genre.genreId}'));
 
     if (response.statusCode != 200) {
       throw Exception('Falha ao carregar tendências');
@@ -78,34 +83,33 @@ class AlbumService {
 
   Future<List<Song>> getSongs(
       {int page = 1, int limit = 15, String? title}) async {
-    String url = title != null
-        ? '$baseUrl/songs?page=$page&limit=$limit&title=$title'
-        : '$baseUrl/songs?page=$page&limit=$limit';
-    final response = await http.get(Uri.parse(url));
+    final queryParameters = {
+      'page': page.toString(),
+      'limit': limit.toString(),
+      if (title != null) 'title': title,
+    };
+
+    final uri =
+        Uri.parse('$baseUrl/songs').replace(queryParameters: queryParameters);
+    final response = await http.get(uri);
 
     if (response.statusCode != 200) {
       throw Exception('Falha ao carregar tendências');
     }
 
-    return List<Song>.from(
-        jsonDecode(response.body).map((model) => Song.fromJson(model)));
+    final List<dynamic> jsonList = jsonDecode(response.body);
+    return jsonList.map((json) => Song.fromJson(json)).toList();
   }
 
-  Future<List<Album>> getByGenre(GenresEnum genre) async {
-    final albums = await find();
-    if (genre == GenresEnum.ALL) return albums;
-    return albums.where((album) {
-      return album.genres.any((albumGenre) =>
-          albumGenre.name.toLowerCase() == genre.label.toLowerCase());
-    }).toList();
-  }
+  Future<List<Genre>> getTrendingGenres() async {
+    final uri = Uri.parse('$baseUrl/trending-genres');
+    final response = await http.get(uri);
 
-  Future<List<Map<String, String>>> getTrendingGenres() async {
-    var a = GenresEnum.values
-        .map((category) => {"label": category.label, "value": category.name})
-        .toList();
+    if (response.statusCode != 200) {
+      throw Exception('Falha ao carregar tendências');
+    }
 
-    print(a);
-    return a;
+    final List<dynamic> jsonList = jsonDecode(response.body);
+    return jsonList.map((json) => Genre.fromJson(json)).toList();
   }
 }

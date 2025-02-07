@@ -1,18 +1,18 @@
 import 'package:flutter/foundation.dart';
-import 'package:wave_flutter/app/models/enums/genres.dart';
+import 'package:wave_flutter/app/models/entities/genre.dart';
 
 class GenreState extends ChangeNotifier {
-  GenresEnum _selectedGenre = GenresEnum.ALL;
+  Genre? _selectedGenre;
 
-  GenresEnum get selectedGenre => _selectedGenre;
+  Genre? get selectedGenre => _selectedGenre;
 
-  void setGenre(GenresEnum genre) {
+  void setGenre(Genre genre) {
     _selectedGenre = genre;
     notifyListeners();
   }
 
   void resetGenre() {
-    _selectedGenre = GenresEnum.ALL;
+    _selectedGenre = null;
     notifyListeners();
   }
 }

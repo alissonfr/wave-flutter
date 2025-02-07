@@ -33,7 +33,6 @@ class PlaylistService {
       Iterable l = jsonDecode(response.body);
       return List<Playlist>.from(l.map((model) => Playlist.fromJson(model)));
     } else {
-      print(response.body);
       throw Exception('Falha ao carregar álbuns');
     }
   }
